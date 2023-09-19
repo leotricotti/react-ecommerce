@@ -1,0 +1,10 @@
+.fa-button {
+  color: #1976d2;
+  padding-top: 15px;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.fa-button:hover {
+  opacity: 1;
+}
