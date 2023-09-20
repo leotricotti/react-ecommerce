@@ -9,7 +9,12 @@ export default function useGitHubAuth() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/api/sessions/github");
+      const response = await fetch(
+        "http://localhost:8080/api/sessions/github",
+        {
+          mode: "no-cors",
+        }
+      );
 
       const data = await response.json();
 
