@@ -62,7 +62,7 @@ function ProductsNav({ setFilter, setIndex }) {
             <li>
               <button
                 className="dropdown-item"
-                // onClick="sortProductsByPrice (1)"
+                onClick={() => handleClick("sort", "1")}
               >
                 Menor a mayor
               </button>
@@ -70,7 +70,7 @@ function ProductsNav({ setFilter, setIndex }) {
             <li>
               <button
                 className="dropdown-item"
-                // onClick="sortProductsByPrice (-1)"
+                onClick={() => handleClick("sort", "-1")}
               >
                 Mayor a menor
               </button>
