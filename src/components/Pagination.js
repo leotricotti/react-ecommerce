@@ -1,13 +1,19 @@
 import React from "react";
 
-function Pagination() {
+function Pagination({
+  page,
+  setPage,
+  activePage,
+  disableNavButton,
+  handlePreviousPage,
+}) {
   return (
     <nav>
       <ul className="pagination justify-content-center">
         <li className="page-item">
           <button
-            className="page-link"
-            // onclick="previousPage('products?page')"
+            className={`page-link ${disableNavButton ? "disabled" : ""}`}
+            onClick={handlePreviousPage}
             type="button"
             id="previous-page"
           >
@@ -15,10 +21,10 @@ function Pagination() {
           </button>
         </li>
         <li
-          className="page-item"
+          className={`page-item ${activePage === 1 ? "active" : ""}`}
           id="item-page"
           data-page="1"
-          // onclick="pagination(1, 'products?page')"
+          onClick={() => setPage(1)}
         >
           <button className="page-link">1</button>
         </li>
@@ -26,7 +32,7 @@ function Pagination() {
           className="page-item"
           id="item-page"
           data-page="2"
-          // onclick="pagination(2, 'products?page')"
+          onClick={() => setPage(2)}
         >
           <button className="page-link">2</button>
         </li>
@@ -34,7 +40,7 @@ function Pagination() {
           className="page-item"
           id="item-page"
           data-page="3"
-          // onclick="pagination(3, 'products?page')"
+          onClick={() => setPage(3)}
         >
           <button className="page-link">3</button>
         </li>
@@ -42,14 +48,14 @@ function Pagination() {
           className="page-item"
           id="item-page"
           data-page="4"
-          // onclick="pagination(4, 'products?page')"
+          onClick={() => setPage(4)}
         >
           <button className="page-link">4</button>
         </li>
         <li className="page-item">
           <button
-            className="page-link"
-            // onclick="nextPage('products?page')"
+            className={`page-link ${!disableNavButton ? "disabled" : ""}`}
+            onClick={() => setPage(page + 1)}
             type="button"
             id="next-page"
           >

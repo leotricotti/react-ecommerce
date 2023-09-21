@@ -4,14 +4,19 @@ import ProductsCard from "../components/ProductsCard";
 import Pagination from "../components/Pagination";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [filter, setFilter] = useState("page");
+  const userData = JSON.parse(localStorage.getItem("user"));
   const [index, setIndex] = useState("1");
+  const [filter, setFilter] = useState("page");
+  const [products, setProducts] = useState([]);
+  const [activePage, setActivePage] = useState(1);
+  const [disableNavButton, setdisableNavButton] = useState(false);
 
+  // Efecto que establece el titulo de la pagina
   useEffect(() => {
     document.title = "E-Store | Productos";
   }, []);
 
+  // Efecto que obtiene los productos de la API
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -34,17 +39,48 @@ const Products = () => {
     fetchProducts();
   }, [index, filter]);
 
-  const userData = JSON.parse(localStorage.getItem("user"));
+  // Efecto que deshabilita los botones de navegacion
+  useEffect(() => {
+    if (index === 1 && filter === "page") {
+      setdisableNavButton(true);
+    } else if ((index) => 5 && filter === "page") {
+      setdisableNavButton(false);
+    } else if (filter !== "page") {
+      setdisableNavButton(true);
+    }
+  }, [index, filter]);
+
+  // Efecto que establece el numero de pagina activa
+  useEffect(() => {
+    setActivePage(index);
+  }, [index]);
+
+  // Funciones que cambian el numero de pagina
+  const handlePreviousPage = () => {
+    setIndex(index - 1);
+  };
+
+  const handleNextPage = () => {
+    setIndex(index + 1);
+  };
 
   return (
     <>
       <Navbar userData={userData} />
       <ProductsCard
         products={products}
-        setFilter={setFilter}
         setIndex={setIndex}
+        setFilter={setFilter}
       />
-      <Pagination />
+      <Pagination
+        setIndex={setIndex}
+        setFilter={setFilter}
+        activePage={activePage}
+        setActivePage={setActivePage}
+        handleNextPage={handleNextPage}
+        disableNavButton={disableNavButton}
+        handlePreviousPage={handlePreviousPage}
+      />
     </>
   );
 };
