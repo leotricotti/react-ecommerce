@@ -9,7 +9,10 @@ const Products = () => {
   const [filter, setFilter] = useState("page");
   const [products, setProducts] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  const [disableNavButton, setdisableNavButton] = useState(false);
+  const [disablePrevNavButton, setdisablePrevNavButton] = useState(false);
+  const [disableNextNavButton, setdisableNextNavButton] = useState(false);
+
+  console.log(typeof index, filter);
 
   // Efecto que establece el titulo de la pagina
   useEffect(() => {
@@ -41,27 +44,33 @@ const Products = () => {
 
   // Efecto que deshabilita los botones de navegacion
   useEffect(() => {
-    if (index === 1 && filter === "page") {
-      setdisableNavButton(true);
-    } else if ((index) => 5 && filter === "page") {
-      setdisableNavButton(false);
-    } else if (filter !== "page") {
-      setdisableNavButton(true);
+    if (
+      (index === 1 && filter === "page") ||
+      (index === "1" && filter === "page")
+    ) {
+      setdisablePrevNavButton(true);
+      setdisableNextNavButton(false);
+    } else if (index > 5 && filter === "page") {
+      setdisablePrevNavButton(false);
+      setdisableNextNavButton(true);
+    } else {
+      setdisablePrevNavButton(false);
+      setdisableNextNavButton(false);
     }
   }, [index, filter]);
 
   // Efecto que establece el numero de pagina activa
   useEffect(() => {
-    setActivePage(index);
+    setActivePage(parseInt(index));
   }, [index]);
 
   // Funciones que cambian el numero de pagina
   const handlePreviousPage = () => {
-    setIndex(index - 1);
+    setIndex(parseInt(index) - 1);
   };
 
   const handleNextPage = () => {
-    setIndex(index + 1);
+    setIndex(parseInt(index) + 1);
   };
 
   return (
@@ -78,8 +87,9 @@ const Products = () => {
         activePage={activePage}
         setActivePage={setActivePage}
         handleNextPage={handleNextPage}
-        disableNavButton={disableNavButton}
         handlePreviousPage={handlePreviousPage}
+        disablePrevNavButton={disablePrevNavButton}
+        disableNextNavButton={disableNextNavButton}
       />
     </>
   );
