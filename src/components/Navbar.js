@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../css/navbar.css";
 
-function Navbar({ userData }) {
+function Navbar({ userData, handleLogout }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -15,14 +15,17 @@ function Navbar({ userData }) {
         >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu d-flex align-items-center">
             {userData.role === "admin" ? (
-              <div className="d-flex justify-content-center position-relative admin-panel">
-                <button
-                  className="btn btn-link text-decoration-none admin-btn"
-                  type="button"
-                  // onClick="goToAdminPanel()"
-                >
-                  Admin Panel
-                </button>
+              <div className="d-flex align-items-center">
+                <div className="d-flex justify-content-center position-relative admin-panel">
+                  <button
+                    className="btn btn-link text-decoration-none admin-btn"
+                    type="button"
+                    // onClick="goToAdminPanel()"
+                  >
+                    Admin Panel
+                  </button>
+                </div>
+                <p className="text-white-50">Bienvenido {userData.name}</p>
               </div>
             ) : (
               <p className="text-white-50">Bienvenido {userData.name}</p>
@@ -58,7 +61,7 @@ function Navbar({ userData }) {
                 <li>
                   <button
                     className="btn dropdown-item"
-                    // onClick="logout()"
+                    onClick={() => handleLogout()}
                   >
                     <i className="fas fa-sign-out-alt fa-fw"></i>
                     Cerrar sesión

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProductsCard from "../components/ProductsCard";
 import Pagination from "../components/Pagination";
 
 const Products = () => {
+  const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user"));
   const [index, setIndex] = useState("1");
   const [filter, setFilter] = useState("page");
@@ -11,8 +14,6 @@ const Products = () => {
   const [activePage, setActivePage] = useState(1);
   const [disablePrevNavButton, setdisablePrevNavButton] = useState(false);
   const [disableNextNavButton, setdisableNextNavButton] = useState(false);
-
-  console.log(typeof index, filter);
 
   // Efecto que establece el titulo de la pagina
   useEffect(() => {
@@ -64,6 +65,39 @@ const Products = () => {
     setActivePage(parseInt(index));
   }, [index]);
 
+  // Funcion que cierra la sesion
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/sessions/logout",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data) {
+        Swal.fire({
+          icon: "success",
+          title: "Gracias por utilizar nuestros servicios",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          navigate("/");
+          localStorage.removeItem("user");
+        });
+      }
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Funciones que cambian el numero de pagina
   const handlePreviousPage = () => {
     setIndex(parseInt(index) - 1);
@@ -75,7 +109,7 @@ const Products = () => {
 
   return (
     <>
-      <Navbar userData={userData} />
+      <Navbar userData={userData} handleLogout={handleLogout} />
       <ProductsCard
         products={products}
         setIndex={setIndex}
