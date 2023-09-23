@@ -14,10 +14,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useLogin from "../hooks/useLogin";
-import Spinner from "../components/Spinner";
 import SocialNetworkAuth from "../components/SocialNetworkAuth";
 import DividerText from "../components/DividerText";
 import useGitHubAuth from "../hooks/useGitHubAuth";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -46,7 +46,8 @@ const defaultTheme = createTheme({
 });
 
 export default function SignIn() {
-  const [isLoading, postLogin] = useLogin();
+  const navigate = useNavigate();
+  const [isLoggedIn, postLogin] = useLogin();
   const { gitHubData } = useGitHubAuth();
 
   useEffect(() => {
@@ -60,9 +61,14 @@ export default function SignIn() {
     postLogin(userName, password);
   };
 
-  return isLoading ? (
-    <Spinner />
-  ) : (
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/products");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
+
+  return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />

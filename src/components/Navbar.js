@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../css/navbar.css";
 
-function Navbar({ userData, handleLogout }) {
+function Navbar({ handleLogout }) {
+  const userData = JSON.parse(localStorage.getItem("user"));
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">

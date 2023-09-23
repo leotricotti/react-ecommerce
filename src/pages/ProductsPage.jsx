@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProductsCard from "../components/ProductsCard";
 import Pagination from "../components/Pagination";
+import Spinner from "../components/Spinner";
 
 const Products = () => {
   const navigate = useNavigate();
-  const userData = JSON.parse(localStorage.getItem("user"));
   const [index, setIndex] = useState("1");
   const [filter, setFilter] = useState("page");
   const [products, setProducts] = useState([]);
@@ -79,7 +79,6 @@ const Products = () => {
       );
 
       const data = await response.json();
-      console.log(data);
 
       if (data) {
         Swal.fire({
@@ -107,9 +106,11 @@ const Products = () => {
     setIndex(parseInt(index) + 1);
   };
 
-  return (
+  return products.length === 0 ? (
+    <Spinner />
+  ) : (
     <>
-      <Navbar userData={userData} handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} />
       <ProductsCard
         products={products}
         setIndex={setIndex}
