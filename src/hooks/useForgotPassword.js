@@ -47,8 +47,6 @@ export default function useForgotPassword() {
 
       const result = await response.json();
 
-      console.log(result);
-
       if (result.respuesta === "Contrseña actualizada con éxito") {
         Swal.fire({
           icon: "success",

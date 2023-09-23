@@ -18,6 +18,7 @@ import SocialNetworkAuth from "../components/SocialNetworkAuth";
 import DividerText from "../components/DividerText";
 import useGitHubAuth from "../hooks/useGitHubAuth";
 import { useNavigate } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
 function Copyright(props) {
   return (
@@ -47,6 +48,7 @@ const defaultTheme = createTheme({
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [createCart] = useCart();
   const [isLoggedIn, postLogin] = useLogin();
   const { gitHubData } = useGitHubAuth();
 
@@ -63,6 +65,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (isLoggedIn) {
+      createCart();
       navigate("/products");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

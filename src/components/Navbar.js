@@ -70,18 +70,13 @@ function Navbar({ handleLogout }) {
                 </li>
               </ul>
             </li>
-            <button
-              className="btn position-relative"
-              // onClick="setCartRoute()"
-            >
-              <Link to="" id="cart-route">
-                <i className="fa-solid fa-cart-shopping"></i>
-                <span
-                  id="cart-badge"
-                  className="cart-basket d-flex align-items-center justify-content-center"
-                ></span>
-              </Link>
-            </button>
+            <Link className="btn position-relative" to={"/cart"}>
+              <i className="fa-solid fa-cart-shopping"></i>
+              <span
+                id="cart-badge"
+                className="cart-basket d-flex align-items-center justify-content-center"
+              ></span>
+            </Link>
           </ul>
         </div>
       </div>

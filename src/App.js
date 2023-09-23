@@ -6,6 +6,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useLogin from "./hooks/useLogin";
 import ForgotPassword from "./pages/ForgotPasswordPage";
+import CartPage from "./pages/CartPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,7 +33,10 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         {isLoggedIn ? (
-          <Route path="/products" element={<Products />} />
+          <>
+            <Route path="/products" element={<Products />} />
+            <Route path="/cart" element={<CartPage />} />
+          </>
         ) : (
           <Route path="*" element={<Navigate to="/" />} />
         )}
