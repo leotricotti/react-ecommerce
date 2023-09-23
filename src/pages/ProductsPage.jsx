@@ -9,7 +9,7 @@ import useCart from "../hooks/useCart";
 
 const Products = () => {
   const navigate = useNavigate();
-  const [getCartId] = useCart();
+  const { getCartId } = useCart();
   const [index, setIndex] = useState("1");
   const [filter, setFilter] = useState("page");
   const [products, setProducts] = useState([]);

@@ -1,12 +1,9 @@
-import { useState } from "react";
-
 export default function useCart() {
-  const [cartId, saveCartId] = useState("");
-
-  //Crea un carrito vacío en la base de datos
+  // Crea un carrito vacío en la base de datos
   async function createCart() {
-    if (localStorage.getItem("cartId")) {
-      return;
+    const cartId = localStorage.getItem("cartId");
+    if (cartId) {
+      return cartId;
     }
     try {
       const response = await fetch("http://localhost:8080/api/carts", {
@@ -18,27 +15,35 @@ export default function useCart() {
           products: [],
         }),
       });
-      await response.json();
+      const result = await response.json();
+      localStorage.setItem("cartId", result.id);
+      return result.id;
     } catch (error) {
       console.log(error);
+      throw new Error("No se pudo crear el carrito en la base de datos");
     }
   }
 
-  //Obtener carrito
-  if (localStorage.getItem("cartId") === null) {
-    localStorage.setItem("cartId", cartId);
-  }
-
+  // Obtiene el ID del carrito
   async function getCartId() {
     try {
-      const response = await fetch("http://localhost:8080/api/carts");
-      const carts = await response.json();
-      const lastCart = carts[carts.length - 1];
-      saveCartId(lastCart._id);
+      const response = await fetch("http://localhost:8080/api/carts", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      const lastCart = result[result.length - 1];
+      console.log(lastCart);
+      localStorage.setItem("cartId", lastCart);
+      return lastCart;
     } catch (error) {
       console.log(error);
+      throw new Error("No se pudo obtener el ID del carrito");
     }
   }
 
-  return [createCart, getCartId];
+  return { createCart, getCartId };
 }

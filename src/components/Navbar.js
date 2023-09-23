@@ -75,7 +75,9 @@ function Navbar({ handleLogout }) {
               <span
                 id="cart-badge"
                 className="cart-basket d-flex align-items-center justify-content-center"
-              ></span>
+              >
+                0
+              </span>
             </Link>
           </ul>
         </div>

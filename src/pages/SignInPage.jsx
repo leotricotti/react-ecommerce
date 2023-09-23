@@ -48,7 +48,7 @@ const defaultTheme = createTheme({
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const [createCart] = useCart();
+  const { createCart } = useCart();
   const [isLoggedIn, postLogin] = useLogin();
   const { gitHubData } = useGitHubAuth();
 
