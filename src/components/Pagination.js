@@ -9,7 +9,7 @@ function Pagination({
   disableNextNavButton,
 }) {
   return (
-    <nav>
+    <nav className="nav-center mb-5 mt-4">
       <ul className="pagination justify-content-center">
         <li className="page-item">
           <button
