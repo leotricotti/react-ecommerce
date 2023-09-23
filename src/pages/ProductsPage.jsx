@@ -5,9 +5,11 @@ import Navbar from "../components/Navbar";
 import ProductsCard from "../components/ProductsCard";
 import Pagination from "../components/Pagination";
 import Spinner from "../components/Spinner";
+import useCart from "../hooks/useCart";
 
 const Products = () => {
   const navigate = useNavigate();
+  const [getCartId] = useCart();
   const [index, setIndex] = useState("1");
   const [filter, setFilter] = useState("page");
   const [products, setProducts] = useState([]);
@@ -114,6 +116,7 @@ const Products = () => {
       <ProductsCard
         products={products}
         setIndex={setIndex}
+        getCartId={getCartId}
         setFilter={setFilter}
       />
       <Pagination

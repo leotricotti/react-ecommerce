@@ -2,7 +2,7 @@ import React from "react";
 import "../css/productsCard.css";
 import ProctsNav from "./ProductsNav";
 
-function ProductCard({ products, setFilter, setIndex }) {
+function ProductCard({ products, setFilter, setIndex, getCartId }) {
   return (
     <>
       <ProctsNav setFilter={setFilter} setIndex={setIndex} />
@@ -77,7 +77,7 @@ function ProductCard({ products, setFilter, setIndex }) {
                       <button
                         className="btn btn-outline-primary btn-sm mt-2"
                         type="button"
-                        // onClick="addProduct('{{this._id}}')"
+                        onClick={() => getCartId()}
                       >
                         Agregar al carrito
                       </button>
