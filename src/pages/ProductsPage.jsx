@@ -9,7 +9,7 @@ import useCart from "../hooks/useCart";
 
 const Products = () => {
   const navigate = useNavigate();
-  const { getCartId } = useCart();
+  const { getCartId, addCartId } = useCart();
   const [index, setIndex] = useState("1");
   const [filter, setFilter] = useState("page");
   const [products, setProducts] = useState([]);
@@ -108,6 +108,11 @@ const Products = () => {
     setIndex(parseInt(index) + 1);
   };
 
+  const handlerCardId = () => {
+    getCartId();
+    addCartId();
+  };
+
   return products.length === 0 ? (
     <Spinner />
   ) : (
@@ -116,8 +121,8 @@ const Products = () => {
       <ProductsCard
         products={products}
         setIndex={setIndex}
-        getCartId={getCartId}
         setFilter={setFilter}
+        handlerCardId={handlerCardId}
       />
       <Pagination
         setIndex={setIndex}

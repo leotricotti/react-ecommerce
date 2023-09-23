@@ -34,10 +34,11 @@ export default function useCart() {
         },
       });
       const result = await response.json();
-      console.log(result);
-      const lastCart = result[result.length - 1];
-      console.log(lastCart);
-      localStorage.setItem("cartId", lastCart);
+      const lastCart =
+        result.carts && result.carts.length > 0
+          ? result.carts[result.carts.length - 1]
+          : null;
+      localStorage.setItem("cartId", lastCart._id);
       return lastCart;
     } catch (error) {
       console.log(error);
@@ -45,5 +46,28 @@ export default function useCart() {
     }
   }
 
-  return { createCart, getCartId };
+  //Ruta que agrega el id del carrito como referencia al usuario
+  const addCartId = async () => {
+    return new Promise(async (resolve, reject) => {
+      const cartId = localStorage.getItem("cartId");
+      const user = localStorage.getItem("user");
+
+      while (!cartId) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+      const response = await fetch("http://localhost:8080/api/userCart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cartId,
+          user,
+        }),
+      });
+      resolve(response);
+    });
+  };
+
+  return { createCart, getCartId, addCartId };
 }
