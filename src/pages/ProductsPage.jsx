@@ -17,6 +17,8 @@ const Products = () => {
   const [disablePrevNavButton, setdisablePrevNavButton] = useState(false);
   const [disableNextNavButton, setdisableNextNavButton] = useState(false);
 
+
+
   // Efecto que establece el titulo de la pagina
   useEffect(() => {
     document.title = "E-Store | Productos";
@@ -113,7 +115,7 @@ const Products = () => {
     addCartId();
   };
 
-  return products.length === 0 ? (
+  return !products ? (
     <Spinner />
   ) : (
     <>

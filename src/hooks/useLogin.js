@@ -25,7 +25,6 @@ export default function useLogin() {
         return;
       } else {
         setisLoggedIn(true);
-        localStorage.setItem("user", JSON.stringify(result.data));
       }
 
       return result;
