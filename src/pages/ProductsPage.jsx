@@ -5,19 +5,17 @@ import Navbar from "../components/Navbar";
 import ProductsCard from "../components/ProductsCard";
 import Pagination from "../components/Pagination";
 import Spinner from "../components/Spinner";
-import useCart from "../hooks/useCart";
+import useAddProducts from "../hooks/useAddProducts";
 
 const Products = () => {
   const navigate = useNavigate();
-  const { getCartId, addCartId } = useCart();
+  const [addProduct] = useAddProducts();
   const [index, setIndex] = useState("1");
   const [filter, setFilter] = useState("page");
   const [products, setProducts] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const [disablePrevNavButton, setdisablePrevNavButton] = useState(false);
   const [disableNextNavButton, setdisableNextNavButton] = useState(false);
-
-
 
   // Efecto que establece el titulo de la pagina
   useEffect(() => {
@@ -110,9 +108,8 @@ const Products = () => {
     setIndex(parseInt(index) + 1);
   };
 
-  const handlerCardId = () => {
-    getCartId();
-    addCartId();
+  const handleAddProducts = (id) => {
+    addProduct(id);
   };
 
   return !products ? (
@@ -124,7 +121,7 @@ const Products = () => {
         products={products}
         setIndex={setIndex}
         setFilter={setFilter}
-        handlerCardId={handlerCardId}
+        handleAddProducts={handleAddProducts}
       />
       <Pagination
         setIndex={setIndex}
