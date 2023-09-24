@@ -19,7 +19,6 @@ import DividerText from "../components/DividerText";
 import useGitHubAuth from "../hooks/useGitHubAuth";
 import { useNavigate } from "react-router-dom";
 import useCart from "../hooks/useCart";
-import useGetUserInfo from "../hooks/useGetUserInfo";
 
 function Copyright(props) {
   return (
@@ -49,7 +48,6 @@ const defaultTheme = createTheme({
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const { getUserInfo } = useGetUserInfo();
   const { createCart } = useCart();
   const [isLoggedIn, postLogin] = useLogin();
   const { gitHubData } = useGitHubAuth();
@@ -68,7 +66,6 @@ export default function SignIn() {
   useEffect(() => {
     if (isLoggedIn) {
       createCart();
-      getUserInfo();
       navigate("/products");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
