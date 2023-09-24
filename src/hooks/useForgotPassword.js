@@ -7,17 +7,6 @@ export default function useForgotPassword() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function postForgot(username, password, newPassword) {
-    console.log(username, password, newPassword);
-    if (!username || !password || !newPassword) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Por favor, rellene todos los campos",
-        showConfirmButton: false,
-        timer: 1800,
-      });
-    }
-
     setIsLoading(true);
 
     if (password !== newPassword) {
@@ -28,7 +17,6 @@ export default function useForgotPassword() {
         showConfirmButton: false,
         timer: 1800,
       }).then(() => {
-        navigate("/forgot");
         setIsLoading(false);
       });
     }
