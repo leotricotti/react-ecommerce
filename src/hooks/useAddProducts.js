@@ -1,17 +1,23 @@
 export default function useAddProducts() {
-  //Obtener id del carrito
+  // Obtiene el ID del carrito
   async function getCartId() {
     try {
-      if (localStorage.getItem("cartId")) {
-        return null;
-      } else {
-        const response = await fetch("http://localhost:8080/api/carts");
-        const carts = await response.json();
-        const lastCart = carts[carts.length - 1];
-        return localStorage.setItem("cartId", lastCart._id);
-      }
+      const response = await fetch("http://localhost:8080/api/carts", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      const lastCart =
+        result.carts && result.carts.length > 0
+          ? result.carts[result.carts.length - 1]
+          : null;
+      localStorage.setItem("cartId", lastCart._id);
+      return lastCart;
     } catch (error) {
       console.log(error);
+      throw new Error("No se pudo obtener el ID del carrito");
     }
   }
 
